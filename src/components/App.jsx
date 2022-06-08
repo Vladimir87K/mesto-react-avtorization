@@ -9,6 +9,7 @@ import ImagePopup from './ImagePopup';
 import PopupDelete from './PopupDelete';
 import PopupWithForm from './PopupWithForm';
 import {api} from '../utils/api';
+import Api from '../utils/api';
 import '../index.css';
 
 
