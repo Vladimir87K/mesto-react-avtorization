@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import avatar from "../image/image.jpg";
 import Card from './Card';
-import api from "../utils/api";
 
 const Main = (props) => {
 
@@ -18,7 +17,7 @@ const Main = (props) => {
         </div>
         <button onClick={props.onAddPlace} className="profil__btn btn-cursor" type="button" aria-label="добавление картинки" />
       </section>
-      <section class="cards">
+      <section className="cards">
       {props.cards.map((card, i) => <Card handleCardClick={props.handleCardClick} onCardClick={props.onCardClick} key={i} card={card}  />)}
       </section>
     </div>

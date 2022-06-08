@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import Header from './components/Header';
-import Main from './components/Main';
-import Footer from './components/Footer';
-import PopupProfil from './components/PopupProfil';
-import PopupCard from './components/PopupCard';
-import PopupAvatar from './components/PopupAvatar';
-import PopupImage from './components/PopupImage';
-import PopupDelete from './components/PopupDelete';
-import PopupWithForm from './components/PopupWithForm';
-
-import api from './utils/api';
-import './index.css';
+import Header from './Header';
+import Main from './Main';
+import Footer from './Footer';
+import PopupProfil from './PopupProfil';
+import PopupCard from './PopupCard';
+import PopupAvatar from './PopupAvatar';
+import PopupImage from './PopupImage';
+import PopupDelete from './PopupDelete';
+import PopupWithForm from './PopupWithForm';
+import api from '../utils/api';
+import '../index.css';
 
 
 const App = () => {
@@ -91,11 +90,13 @@ const App = () => {
             />
         <PopupImage card={cardForPopup} onCardClick={onCardClick} />
         <Footer />
-        <PopupWithForm isOpen={isOpen} onClose={closeAllPopups} children={child} title={title} name={name} />
-
-
-
-</div>
+        <PopupWithForm isOpen={isOpen} 
+            onClose={closeAllPopups} 
+            children={child} 
+            title={title} 
+            name={name} 
+            />
+    </div>
     );
 }
 

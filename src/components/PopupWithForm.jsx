@@ -1,5 +1,4 @@
 import React from "react";
-import PopupCard from "./PopupCard";
 
 const PopupWithForm = (props) => {
   return (
