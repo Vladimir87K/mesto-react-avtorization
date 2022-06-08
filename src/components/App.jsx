@@ -88,7 +88,7 @@ const App = () => {
             userDescription={userDescription}
             handleCardClick={handleCardClick}
             />
-        <ImageImage card={cardForPopup} onCardClick={onCardClick} />
+        <ImagePopup card={cardForPopup} onCardClick={onCardClick} />
         <Footer />
         <PopupWithForm isOpen={isOpen} 
             onClose={closeAllPopups} 
