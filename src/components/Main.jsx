@@ -18,7 +18,7 @@ const Main = (props) => {
         <button onClick={props.onAddPlace} className="profil__btn btn-cursor" type="button" aria-label="добавление картинки" />
       </section>
       <section className="cards">
-      {props.cards.map((card, i) => <Card handleCardClick={props.handleCardClick} onCardClick={props.onCardClick} key={i} card={card}  />)}
+      {props.cards.map((card, i) => <Card handleCardClick={props.handleCardClick} onCardClick={props.onCardClick} key={card._id} card={card}  />)}
       </section>
     </div>
   )
