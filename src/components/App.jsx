@@ -5,7 +5,7 @@ import Footer from './Footer';
 import PopupProfil from './PopupProfil';
 import PopupCard from './PopupCard';
 import PopupAvatar from './PopupAvatar';
-import PopupImage from './PopupImage';
+import ImagePopup from './ImagePopup';
 import PopupDelete from './PopupDelete';
 import PopupWithForm from './PopupWithForm';
 import api from '../utils/api';
@@ -88,7 +88,7 @@ const App = () => {
             userDescription={userDescription}
             handleCardClick={handleCardClick}
             />
-        <PopupImage card={cardForPopup} onCardClick={onCardClick} />
+        <ImageImage card={cardForPopup} onCardClick={onCardClick} />
         <Footer />
         <PopupWithForm isOpen={isOpen} 
             onClose={closeAllPopups} 
