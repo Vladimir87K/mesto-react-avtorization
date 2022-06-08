@@ -1,6 +1,6 @@
 import React from "react";
 
-const PopupImage = (props) => {
+const ImagePopup = (props) => {
   return (
     <div className={`popup popup-image ${props.card && 'popup_opened'}`}>
     <div className="popup-image__container">
@@ -12,4 +12,4 @@ const PopupImage = (props) => {
   );
 }
 
-export default PopupImage;
+export default ImagePopup;
