@@ -8,7 +8,7 @@ import PopupAvatar from './PopupAvatar';
 import ImagePopup from './ImagePopup';
 import PopupDelete from './PopupDelete';
 import PopupWithForm from './PopupWithForm';
-import api from '../utils/api';
+import {api} from '../utils/api';
 import '../index.css';
 
 
