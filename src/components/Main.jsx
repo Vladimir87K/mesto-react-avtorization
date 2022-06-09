@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import avatar from "../image/image.jpg";
 import Card from './Card';
+import api from "../utils/api";
 
 const Main = (props) => {
 
