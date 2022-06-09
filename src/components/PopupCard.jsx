@@ -2,8 +2,6 @@ import React from "react";
 
 const PopupCard = (props) => {
 
-
-
   return (
     <fieldset className="popup__form-content">
       <input id="popup__form-name-image" type="text" className="popup__form popup__form-name-image" name="imageName" defaultValue placeholder="Название" minLength={2} maxLength={30} required />
@@ -15,4 +13,4 @@ const PopupCard = (props) => {
   )
 }
 
-export default PopupCard
+export default PopupCard;

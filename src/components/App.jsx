@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
@@ -13,59 +13,45 @@ import '../index.css';
 
 
 const App = () => {
-    const [isOpen, setOpenPopup] = useState(false);
-    const [child, setChild] = useState();
-    const [title, setTitle] = useState('');
-    const [name, setName] = useState('');
     const [cardList, setCardList] = useState([]);
-    const [userName, setUserName] = useState();
-    const [userDescription, setUserDescription] = useState();
-    const [userAvatar, setUserAvatar] = useState();
+    const [userName, setUserName] = useState('');
+    const [userDescription, setUserDescription] = useState('');
+    const [userAvatar, setUserAvatar] = useState('');
     const [cardForPopup, setCardForPopup] = useState(null); 
+    const [isPopupProfilOpen, setIsPopupProfilOpen] = useState(false);
+    const [isPopupCardOpen, setIsPopupCardOpen] = useState(false);
+    const [isPopupAvatarOpen, setIsPopupAvatarOpen] = useState(false);
 
     useEffect(() => {
       api.getInitialProfil().then((data) => {
         setUserName(data.name);
         setUserDescription(data.about);
         setUserAvatar(data.avatar);
-      })
-    })
-
-    useEffect(() => {
-        api.getInitialCards().then((data) => {
-            setCardList(data);
         })
-    })
-    
+        .catch(err => console.log(err));
 
-    const isEditProfilePopupOpen = () => {
-        setOpenPopup(true);
-        setChild(PopupProfil);
-        setName('profil');
-        setTitle('Редактировать профиль');
+      api.getInitialCards().then((data) => {
+        setCardList(data);
+        })
+        .catch(err => console.log(err));
+    }, []);
+
+    const onProfilPopupOpen = () => {
+        setIsPopupProfilOpen(true)
     }
 
-    const isAddPlacePopupOpen = () => {
-        setOpenPopup(true);
-        setChild(PopupCard);
-        setName('card');
-        setTitle('Новое место');
+    const onAvatarPopupOpen = () => {
+        setIsPopupAvatarOpen(true);
     }
 
-    const isEditAvatarPopupOpen = () => {
-        setOpenPopup(true);
-        setChild(PopupAvatar);
-        setName('avatar');
-        setTitle('Обновить аватар');
-    }
-
-    const isDeletePopupOpen = () => {
-        setOpenPopup(true);
-        setChild(PopupDelete);
+    const onPopupCarOpen = () => {
+        setIsPopupCardOpen(true)
     }
 
     const closeAllPopups = () => {
-        setOpenPopup(false);
+        setIsPopupProfilOpen(false);
+        setIsPopupCardOpen(false);
+        setIsPopupAvatarOpen(false);
     }
 
     const handleCardClick = (card) => {
@@ -79,9 +65,9 @@ const App = () => {
     return ( 
     <div className="page">
         <Header />
-        <Main onEditProfile={isEditProfilePopupOpen} 
-            onAddPlace={isAddPlacePopupOpen} 
-            onEditAvatar={isEditAvatarPopupOpen} 
+        <Main onEditProfile={onProfilPopupOpen} 
+            onAddPlace={onPopupCarOpen} 
+            onEditAvatar={onAvatarPopupOpen} 
             cards={cardList} 
             userName={userName}
             userAvatar={userAvatar}
@@ -90,12 +76,15 @@ const App = () => {
             />
         <ImagePopup card={cardForPopup} onCardClick={onCardClick} />
         <Footer />
-        <PopupWithForm isOpen={isOpen} 
-            onClose={closeAllPopups} 
-            children={child} 
-            title={title} 
-            name={name} 
-            />
+        <PopupWithForm isOpen={isPopupAvatarOpen} title='Обновить аватар' name='avatar' onClose={closeAllPopups}>
+            <PopupAvatar />
+        </PopupWithForm>
+        <PopupWithForm isOpen={isPopupProfilOpen} title='Редактировать профиль' name='profil' onClose={closeAllPopups}>
+            <PopupProfil />
+        </PopupWithForm>
+        <PopupWithForm isOpen={isPopupCardOpen} title='Обновить аватар' name='avatar' onClose={closeAllPopups}>
+            <PopupCard />
+        </PopupWithForm>
     </div>
     );
 }
