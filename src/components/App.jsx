@@ -23,14 +23,6 @@ const App = () => {
     const [userAvatar, setUserAvatar] = useState();
     const [cardForPopup, setCardForPopup] = useState(null); 
 
-    const api = new Api({
-        urlBase: 'https://mesto.nomoreparties.co/v1/cohort-41',
-        headers: {
-            authorization: 'd2b53e42-b171-4a97-abd9-e550272a84f9',
-            'Content-Type': 'application/json'
-        }
-      });
-  
     useEffect(() => {
       api.getInitialProfil().then((data) => {
         setUserName(data.name);
