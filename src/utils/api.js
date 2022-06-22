@@ -55,8 +55,8 @@ class Api {
               method: 'PATCH',
               headers: this._headers,
               body: JSON.stringify({
-                  name: data.userName,
-                  about: data.userJob
+                  name: data.name,
+                  about: data.about
               })
           })
           .then(this._checkError)
@@ -67,23 +67,23 @@ class Api {
               method: 'PATCH',
               headers: this._headers,
               body: JSON.stringify({
-                  avatar: data.urlAvatar
+                  avatar: data.avatar
               })
           })
           .then(this._checkError)
   }
 
-  addLikeCard(idCard) {
-      return fetch(`${this._urlBase}/cards/${idCard}/likes`, {
-              method: 'PUT',
-              headers: this._headers,
-          })
-          .then(this._checkError)
-  }
+//   addLikeCard(idCard) {
+//       return fetch(`${this._urlBase}/cards/${idCard}/likes`, {
+//               method: 'PUT',
+//               headers: this._headers,
+//           })
+//           .then(this._checkError)
+//   }
 
-  deleteLikeCard(idCard) {
+  changeLikeCardStatus(idCard, isLiked) {
       return fetch(`${this._urlBase}/cards/${idCard}/likes`, {
-              method: 'DELETE',
+              method: isLiked ? 'DELETE' : 'PUT',
               headers: this._headers,
           })
           .then(this._checkError)
