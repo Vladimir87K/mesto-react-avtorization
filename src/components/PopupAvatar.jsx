@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import PopupWithForm from './PopupWithForm';
 
 const PopupAvatar = (props) => {
-  const textInputAvatar = React.useRef('');
+  const textInputAvatar = useRef('');
+
+  useEffect(() => {
+    textInputAvatar.current.value = '';
+  }, [props.onClose])
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -10,7 +14,6 @@ const PopupAvatar = (props) => {
     props.onUpdateAvatar({
       avatar: textInputAvatar.current.value
     });
-    textInputAvatar.current.value = '';
   } 
   
   return (

@@ -13,7 +13,7 @@ const Card = (props) =>   {
         <div className="card__content content-overflow">
           <h2 className="card__title content-overflow">{props.card.name}</h2>
           <div className="card__like">
-            <button onClick={() => {props.onCardLike(props.card)}} className={`card__like-img btn-cursor ${isLiked  && 'card__like-img_active'}`} type="button" aria-label="сердечко" />
+            <button onClick={() => {props.onCardLike(props.card, isLiked)}} className={`card__like-img btn-cursor ${isLiked  && 'card__like-img_active'}`} type="button" aria-label="сердечко" />
             <p className="card__like-number">{props.card.likes.length}</p>
           </div>
         </div>

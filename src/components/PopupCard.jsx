@@ -1,9 +1,9 @@
-import React, {useEffect} from "react";
+import React, {useState, useEffect} from "react";
 import PopupWithForm from './PopupWithForm';
 
 const PopupCard = (props) => {
-  const [imageName, setImageName] = React.useState('');
-  const [imageUrl, setImageUrl] = React.useState('');
+  const [imageName, setImageName] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
   
   const handleChangeImageName = (e) => {
     setImageName(e.target.value)
@@ -19,9 +19,13 @@ const PopupCard = (props) => {
       name: imageName,
       link: imageUrl
     })
+  }
+
+  useEffect(() => {
     setImageName('');
     setImageUrl('');
-  }
+  }, [props.onClose]);
+
 
   return (
     <PopupWithForm isOpen={props.isOpen} title='Новое место' name='card' onClose={props.onClose} onSubmit={handleSubmit} >
