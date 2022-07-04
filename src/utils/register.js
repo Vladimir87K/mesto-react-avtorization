@@ -20,9 +20,6 @@ class Register {
         return (e)
       }
     })
-    .then((res) => {
-      return res;
-    })
   }
 
   getAvtorization(password, email) {
@@ -40,9 +37,6 @@ class Register {
       } catch(e){
         return (e)
       }
-    })
-    .then((res) => {
-      return res;
     })
   }
 

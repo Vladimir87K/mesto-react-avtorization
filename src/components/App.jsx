@@ -62,7 +62,6 @@ const App = () => {
 
     const registrationSubmit = (data) => {
         const {password, email} = data;
-        // !user
         register.getRegistration(password, email)
             .then((res) => {
                 setUser(true);
@@ -74,7 +73,6 @@ const App = () => {
     const avtorizationSubmit = (data) => {
         const {password, email} = data;
         setUser(true)
-        // !user
          register.getAvtorization(password, email)
             .then((res) => {
                 setUser(true);
