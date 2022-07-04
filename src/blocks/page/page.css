@@ -1,6 +1,7 @@
 .page {
   background-color: black;
   max-width: 920px;
+  height: 100vh;
   font-family: Inter, sans-serif;
   font-style: normal;
   margin: 0 auto;
