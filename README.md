@@ -1,4 +1,4 @@
-# Проект: Mesto (https://github.com/Vladimir87K/mesto-react-avtorization.git)
+# Проект: Mesto (https://github.com/Vladimir87K/mesto-react-avtorization)
 
 Проект создан в рамках программы обучения __ЯндексПрактикума__
 
