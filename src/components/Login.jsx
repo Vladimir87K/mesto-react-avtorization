@@ -1,4 +1,4 @@
-import React, { useState, Link } from "react";
+import React, { useState } from "react";
 
 function Login(props) {
   const [email, setEmail] = useState('')
@@ -14,10 +14,7 @@ function Login(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    props.onSubmit({
-      email,
-      password
-    });
+    props.onSubmit({password, email});
   }
 
 

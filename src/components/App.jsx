@@ -11,7 +11,7 @@ import PopupCard from './PopupCard';
 import PopupAvatar from './PopupAvatar';
 import ImagePopup from './ImagePopup';
 import PopupDelete from './PopupDelete';
-import InfoTooltip from './PopupEntrance';
+import InfoTooltip from './InfoTooltip';
 import api from '../utils/api';
 import register from '../utils/register';
 import ProtectedRoute from './ProtectedRoute';
@@ -27,11 +27,12 @@ const App = () => {
     const [isPopupAvatarOpen, setIsPopupAvatarOpen] = useState(false);
     const [isPopupDelete, setIsPopupDelete] = useState(false);
     const [isDeleteCard, setIsDeleteCard] = useState({});
-    const [isPopupEntrance, setIsPopupEntrance] = useState(true)
+    const [isInfoTooltip, setIsInfoTooltip] = useState(false)
     const [cards, setCards] = useState([]);
-    const [user, setUser] = useState(true);
+    const [user, setUser] = useState(false);
     const [loggedIn, setLoggedIn] = useState(false);
     const [email, setEmail] = useState('');    
+    const [userData, setUserData] = useState({});
 
     useEffect(() => {
          api.getInitialProfil().then((data) => {
@@ -44,6 +45,19 @@ const App = () => {
             })
             .catch(err => console.log(err));
     }, []);
+
+    useEffect(() => {
+        const jwt = localStorage.getItem("JWT");
+        if (jwt) {
+            register.getControl(jwt)
+                .then((res) => {
+                    setEmail(res.data.email);
+                    setUser(true);
+                    setLoggedIn(true);
+                    navigate("/main");
+                }).catch((err) => console.log(err))
+        }
+    }, [])
     
     const handleCardLike = (card, isLiked) => {
         api.changeLikeCardStatus(card._id, isLiked).then((newCard) => {
@@ -52,31 +66,39 @@ const App = () => {
         .catch((err) => console.log(err));
     }
 
-    const shiftPopupEntrance = () => {
-        
-    }
-
-    const goOverLogin = () => {
-        
+    const handleLogin = () => {
+        setUser(true);
+        navigate("/sign-in");
     }
 
     const registrationSubmit = (data) => {
-        const {password, email} = data;
-        register.getRegistration(password, email)
+        register.getRegistration(data)
             .then((res) => {
+               if (res.email) {
                 setUser(true);
-                console.log(res)
+                setUserData(res);
+                navigate("/sign-in");
+               } else {
+                setIsInfoTooltip(true);
+               };
             })
             .catch(err => console.log(err))
     }
 
     const avtorizationSubmit = (data) => {
-        const {password, email} = data;
-        setUser(true)
-         register.getAvtorization(password, email)
+        setEmail(data.email);
+         register.getAvtorization(data)
             .then((res) => {
-                setUser(true);
                 console.log(res)
+                if (res.token) {
+                    setLoggedIn(true);
+                    localStorage.setItem('JWT', res.token);
+                    setIsInfoTooltip(true);
+                } else {
+                    setIsInfoTooltip(true);
+                }
+                
+                
             })
             .catch(err => console.log(err))
         }
@@ -142,7 +164,7 @@ const App = () => {
         setIsPopupCardOpen(false);
         setIsPopupAvatarOpen(false);
         setIsPopupDelete(false);
-        setIsPopupEntrance(false);
+        setIsInfoTooltip(false);
         setIsDeleteCard([]);
     }
 
@@ -154,14 +176,28 @@ const App = () => {
         setCardForPopup(null);
     }
 
+    const handleRegistration = () => {
+        if (user && loggedIn) {
+          localStorage.removeItem("JWT");
+          setLoggedIn(false);
+          setEmail('')
+          navigate("/sign-in");
+        } else if (user) {
+          setUser(false);
+          navigate("/sign-up");
+        } else {
+          setUser(true);
+          navigate("/sign-in")
+        }
+      }
+
     return ( 
     <div className="page">
             <CurrentUserContext.Provider value={currentUser} >
-                    <Header user={user} email={email} onClick={shiftPopupEntrance} />
-                    <Routes>
-                        <Route path="/login" element={<Login  onSubmit={avtorizationSubmit} onClick={shiftPopupEntrance} />} />
-                        <Route path="/register" element={<Register onSubmit={registrationSubmit} onClick={goOverLogin} />} />
-                        <Route path="infotooltip" element={<InfoTooltip setLoggedIn={loggedIn} />} />
+                    <Header user={user} email={email} loggedIn={loggedIn} handleClick={handleRegistration} />
+                    <Routes>                        
+                        <Route path="/sign-up" element={<Register onSubmit={registrationSubmit} handleLogin={handleLogin} />} />
+                        <Route path="/sign-in" element={<Login  onSubmit={avtorizationSubmit} />} />
                         <Route path="/main" element={
                             <ProtectedRoute loggedIn={loggedIn} >
                                 <Main onEditProfile={onProfilPopupOpen} 
@@ -174,8 +210,9 @@ const App = () => {
                                 <Footer />
                             </ProtectedRoute>
                             } />
-                        <Route path="*" element={<Register onSubmit={registrationSubmit} onClick={goOverLogin} />} />
+                        <Route path="*" element={<Register onSubmit={registrationSubmit} handleLogin={handleLogin} /> } />
                     </Routes>
+                    <InfoTooltip isOpen={isInfoTooltip} onClose={closeAllPopups} loggedIn={loggedIn}  />
                     <ImagePopup card={cardForPopup} onCardClick={onCardClick} />
                     <PopupAvatar isOpen={isPopupAvatarOpen} onClose={closeAllPopups} onUpdateAvatar={onUpdateAvatar} />
                     <PopupProfil isOpen={isPopupProfilOpen} onClose={closeAllPopups} onUpdateUser={onUpdateUser} />

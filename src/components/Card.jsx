@@ -17,7 +17,7 @@ const Card = (props) =>   {
             <p className="card__like-number">{props.card.likes.length}</p>
           </div>
         </div>
-        <button onClick={() => props.onCardDelete(props.card)} className={`${isOwn && 'card__delete btn-cursor'} `} type="button" aria-label="корзина" />
+        <button onClick={() => props.onCardDelete(props.card)} className={`${isOwn ? 'card__delete btn-cursor' : 'card__delete_none'} `} type="button" aria-label="корзина" />
       </div>
     </article>
   )

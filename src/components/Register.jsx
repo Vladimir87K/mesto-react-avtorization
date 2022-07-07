@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom"
 
 function Register(props) {
-  const navigate = useNavigate();
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('');
@@ -17,10 +15,7 @@ function Register(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    props.onSubmit({
-      password,
-      email     
-    });
+    props.onSubmit({password, email})
   }
 
   return (
@@ -31,7 +26,7 @@ function Register(props) {
         <input onChange={handleChangePassword} className="container__input container__password" type="password" id="login-password" name="login-password" placeholder="Пароль" required />
         <button  className="container__submit" type="submit" value="Зарегистрироваться">{"Зарегистрироваться"}</button>
       </form>
-      <Link to="/login" className="container__paragraph">Уже зарегистрированы? Войти</Link>
+      <p onClick={props.handleLogin} className="container__paragraph">Уже зарегистрированы? Войти</p>
     </div>
   )
 }
