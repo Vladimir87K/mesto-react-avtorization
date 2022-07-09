@@ -56,8 +56,10 @@ const App = () => {
                     setLoggedIn(true);
                     navigate("/main");
                 }).catch((err) => console.log(err))
+        } else {
+            navigate("/sign-up");
         }
-    }, [])
+    }, [loggedIn])
     
     const handleCardLike = (card, isLiked) => {
         api.changeLikeCardStatus(card._id, isLiked).then((newCard) => {
@@ -67,18 +69,18 @@ const App = () => {
     }
 
     const handleLogin = () => {
-        setUser(true);
-        navigate("/sign-in");
+        user ? navigate("/sign-in") : navigate("/sign-up");        
     }
 
     const registrationSubmit = (data) => {
         register.getRegistration(data)
             .then((res) => {
-               if (res.email) {
+                console.log(res);
+               if (res) {
                 setUser(true);
-                setUserData(res);
-                navigate("/sign-in");
+                setIsInfoTooltip(true);
                } else {
+                setUser(false);
                 setIsInfoTooltip(true);
                };
             })
@@ -89,12 +91,12 @@ const App = () => {
         setEmail(data.email);
          register.getAvtorization(data)
             .then((res) => {
-                console.log(res)
                 if (res.token) {
                     setLoggedIn(true);
                     localStorage.setItem('JWT', res.token);
-                    setIsInfoTooltip(true);
+                    navigate("/main")
                 } else {
+                    setUser(false);
                     setIsInfoTooltip(true);
                 }
                 
@@ -212,7 +214,7 @@ const App = () => {
                             } />
                         <Route path="*" element={<Register onSubmit={registrationSubmit} handleLogin={handleLogin} /> } />
                     </Routes>
-                    <InfoTooltip isOpen={isInfoTooltip} onClose={closeAllPopups} loggedIn={loggedIn}  />
+                    <InfoTooltip isOpen={isInfoTooltip} onClose={closeAllPopups} user={user}  />
                     <ImagePopup card={cardForPopup} onCardClick={onCardClick} />
                     <PopupAvatar isOpen={isPopupAvatarOpen} onClose={closeAllPopups} onUpdateAvatar={onUpdateAvatar} />
                     <PopupProfil isOpen={isPopupProfilOpen} onClose={closeAllPopups} onUpdateUser={onUpdateUser} />

@@ -14,8 +14,9 @@ class Register {
         "email": data.email})
     })
     .then((response) => {
+      console.log(response)
       try {
-        if (response.status === 200){
+        if (response.status === 201){
           return response.json();
         }
       } 
